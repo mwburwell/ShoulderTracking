@@ -4,27 +4,29 @@ import cv2
 
 import math
 import sys
+from os.path import join
 
 from SlidingWindow import SlidingWindow
 from line import Line
 
 import matplotlib.pyplot as plt 
 
+assets_folder = join('..', 'assets')
 
 
 def main():
-    video = cv2.VideoCapture('./shoulder-proj.mp4')
+    video = cv2.VideoCapture(join(assets_folder, 'shoulder-proj.mp4'))
     last_box = np.array((1, 4))
     
-    sentinel = False
+    sentinel = True
     l_last_line = np.zeros((2))
     r_last_line = np.zeros((2))
     try:
         while(video.isOpened()):
         # capture frame by frame
             result, frame = video.read()
-            if result is False:
-                break
+            # if not result:
+            #     break
             
             
             faces, last_box = detect_bounding_box(frame, last_box)
